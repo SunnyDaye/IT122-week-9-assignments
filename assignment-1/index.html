@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 9: Assignment 1</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1>Fetching from APIs</h1>
+    <div class="container">
+        <div class="api-call exercise">
+            <p>Click the button for a random exercise</p>
+            <button onclick="showExercise()">Exercise</button>
+            <p id="exercise-result"></p>
+        </div>
+        <div class="api-call recipe">
+            <p>Click the button for a random recipe</p>
+            <button onclick="showRecipe()">Recipe</button>
+            <p id="recipe-result"></p>
+        </div>
+    </div>
+    <script>
+        async function getExercise() {
+            const typeOptions = ["cardio", "olympic_weightlifting", "plyometrics", "powerlifting", "strength", "stretching", "strongman"]
+            const muscleOptions = ['abdominals', 'abductors,' , 'adductors', 'biceps', 'calves', 'chest', 'forearms', 'glutes', 'hamstrings', 'lats', 'lower_back', 'middle_back', 'neck', 'quadriceps', 'traps', 'triceps']
+            const difficultyOptions = ['beginner', 'intermediate', 'expert']
+
+            const type = typeOptions[Math.floor(Math.random() * typeOptions.length)]
+            const muscle = muscleOptions[Math.floor(Math.random() * muscleOptions.length)]
+            const difficulty = difficultyOptions[Math.floor(Math.random() * difficultyOptions.length)]
+
+            const endpoint = `https://api.api-ninjas.com/v1/exercises?type=${type}&muscle=${muscle}&difficulty=${difficulty}`
+            const apiKey = '1NC9fDH9tI4a7Twj47lAYA==cBXYMG7S6b69R8aJ'
+
+            const exercise = await fetch(endpoint, {
+                headers: {
+                    'X-Api-Key': apiKey
+                }
+            })
+
+            
+            return await exercise.json();
+        }
+
+        async function getRecipe() {
+            const queryOptions = ['soup', 'stew', 'beef', 'chicken', 'lamb', 'salmon', 'sauteed', 'roasted']
+            const query = queryOptions[Math.floor(Math.random() * queryOptions.length)]
+
+            const endpoint = `https://api.api-ninjas.com/v1/recipe?query=${query}`;
+            const apiKey = '1NC9fDH9tI4a7Twj47lAYA==cBXYMG7S6b69R8aJ'
+
+            const recipe = await fetch(endpoint, {
+                headers: {
+                    'X-Api-Key': apiKey
+                }
+            })
+
+            return await recipe.json()
+        }
+
+        async function showExercise() {
+            const exercise = await getExercise();
+            const result = document.getElementById('exercise-result');
+            result.innerHTML = JSON.stringify(exercise);
+        }
+
+        async function showRecipe() {
+            const recipe = await getRecipe();
+            const result = document.getElementById('recipe-result');
+            result.innerHTML = JSON.stringify(recipe);
+        }
+    </script>
+</body>
+</html>

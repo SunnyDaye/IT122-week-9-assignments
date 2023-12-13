@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.api-call {
+    width: 1200px;
+    height: fit-content;   
+    background-color: rgb(172, 171, 161);
+    box-shadow: 10px 5px 5px darkolivegreen;
+    margin: 10px;
+    padding: 10px;
+}
